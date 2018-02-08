@@ -1,7 +1,12 @@
 package com.example.archismansarkar.dynamicviewaddremove;
 
+import android.Manifest;
+import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.os.Handler;
+import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -13,6 +18,9 @@ import android.content.Context;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+import java.util.List;
+
 
 public class MainActivity extends Activity {
 
@@ -22,20 +30,40 @@ public class MainActivity extends Activity {
     LinearLayout container;
     String[] tname;
     int size = 0;
-    Boolean shouldAllowBack = false;
+    private Boolean exit = false;
 
     SharedPreferences sharedpreferences;
+    SharedPreferences pref;
+    String desired_number;
+
+    private static final String[] ALL_PERMISSIONS = {
+            Manifest.permission.RECEIVE_SMS,
+            Manifest.permission.READ_SMS
+    };
+
+    private static final int SMS_READ_RECEIVE_REQUEST_CODE = 101;
+    private static final int ALL_REQUEST_CODE = 0;
+    private AppPermissions mRuntimePermission;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        mRuntimePermission = new AppPermissions(this);
+        if (!mRuntimePermission.hasPermission(ALL_PERMISSIONS)) {
+            mRuntimePermission.requestPermission(this, ALL_PERMISSIONS, ALL_REQUEST_CODE);
+        }
+
         nameTF = (EditText)findViewById(R.id.tfname);
         numberTF = (EditText)findViewById(R.id.tfnumber);
         buttonAdd = (Button)findViewById(R.id.add);
         container = (LinearLayout)findViewById(R.id.container);
 
         sharedpreferences = getSharedPreferences("Transformer", Context.MODE_PRIVATE);
+
+        pref = getApplicationContext().getSharedPreferences("Desired_Sender_Address", MODE_PRIVATE);
+        desired_number = pref.getString("desired_address", null);
 
         buttonAdd.setOnClickListener(new OnClickListener(){
 
@@ -45,12 +73,16 @@ public class MainActivity extends Activity {
             }});
 
         tname = getFavoriteList(this);
-        String[] arr = new String[2];
+
         if(tname!=null) {
             size = tname.length;
+            String[] arr;
+            arr = new String[2];
             for (int i = 0; i < size; i++) {
-                arr = tname[i].split("-");
-                addViewStatic(arr[0], arr[1]);
+                if(!new String(tname[i]).equals("")) {
+                    arr = tname[i].split(":");
+                    addViewStatic(arr[0], arr[1]);
+                }
             }
         }
 
@@ -58,11 +90,22 @@ public class MainActivity extends Activity {
 
     @Override
     public void onBackPressed() {
-        if (shouldAllowBack==false) {
-            Toast.makeText(this, "Back press exit not allowed!", Toast.LENGTH_LONG).show();
+        if (exit) {
+            finish();
+            System.exit(0);
         } else {
-            super.onBackPressed();
+            Toast.makeText(this, "Press Back again to Exit.",
+                    Toast.LENGTH_SHORT).show();
+            exit = true;
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    exit = false;
+                }
+            }, 3 * 1000);
+
         }
+
     }
 
     public void addViewStatic(final String data1, final String data2){
@@ -70,6 +113,25 @@ public class MainActivity extends Activity {
                 (LayoutInflater) getBaseContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         final View addView = layoutInflater.inflate(R.layout.field, null);
         Button transformer = (Button)addView.findViewById(R.id.tf);
+        transformer.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if (mRuntimePermission.hasPermission(ALL_PERMISSIONS)) {
+                    SharedPreferences.Editor idnumber = pref.edit();
+                    idnumber.putString("desired_address", data2);
+                    idnumber.commit();
+
+                    Intent activityIntent=new Intent(getApplicationContext(),DataDisplayActivity.class);
+                    activityIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    activityIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                    activityIntent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                    getApplicationContext().startActivity(activityIntent);
+                } else {
+                    mRuntimePermission.requestPermission(MainActivity.this, ALL_PERMISSIONS, ALL_REQUEST_CODE);
+                }
+            }
+        });
         TextView tid = (TextView)addView.findViewById(R.id.identifier);
         tid.setText("Name: "+data1+" ID: "+data2);
         Button buttonRemove = (Button)addView.findViewById(R.id.remove);
@@ -78,7 +140,7 @@ public class MainActivity extends Activity {
             @Override
             public void onClick(View v) {
                 //removeStringInPreferences(MainActivity.this,data1);
-                removeFavoriteItem(MainActivity.this, (data1+"-"+data2));
+                removeFavoriteItem(MainActivity.this, (data1+":"+data2));
                 ((LinearLayout)addView.getParent()).removeView(addView);
             }});
 
@@ -90,12 +152,33 @@ public class MainActivity extends Activity {
                 (LayoutInflater) getBaseContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         final View addView = layoutInflater.inflate(R.layout.field, null);
         Button transformer = (Button)addView.findViewById(R.id.tf);
+
         final String data1 = nameTF.getText().toString();
         final String data2 = numberTF.getText().toString();
         TextView tid = (TextView)addView.findViewById(R.id.identifier);
         tid.setText("Name: "+data1+" ID: "+data2);
 
-        addFavoriteItem(MainActivity.this, (data1+"-"+data2));
+        transformer.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if (mRuntimePermission.hasPermission(ALL_PERMISSIONS)) {
+                    SharedPreferences.Editor idnumber = pref.edit();
+                    idnumber.putString("desired_address", data2);
+                    idnumber.commit();
+
+                    Intent activityIntent=new Intent(getApplicationContext(),DataDisplayActivity.class);
+                    activityIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    activityIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                    activityIntent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                    getApplicationContext().startActivity(activityIntent);
+                } else {
+                    mRuntimePermission.requestPermission(MainActivity.this, ALL_PERMISSIONS, ALL_REQUEST_CODE);
+                }
+            }
+        });
+
+        addFavoriteItem(MainActivity.this, (data1+":"+data2));
         //putStringInPreferences(this,data2,data1);
         Button buttonRemove = (Button)addView.findViewById(R.id.remove);
         buttonRemove.setOnClickListener(new OnClickListener(){
@@ -103,7 +186,7 @@ public class MainActivity extends Activity {
             @Override
             public void onClick(View v) {
                 //removeStringInPreferences(MainActivity.this,data1);
-                removeFavoriteItem(MainActivity.this, (data1+"-"+data2));
+                removeFavoriteItem(MainActivity.this, (data1+":"+data2));
                 ((LinearLayout)addView.getParent()).removeView(addView);
             }});
 
@@ -179,6 +262,32 @@ public class MainActivity extends Activity {
             return arr;
         }
         else return null;
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,
+                                           @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        switch (requestCode) {
+            case ALL_REQUEST_CODE:
+                List<Integer> permissionResults = new ArrayList<>();
+                for (int grantResult : grantResults) {
+                    permissionResults.add(grantResult);
+                }
+                if (permissionResults.contains(PackageManager.PERMISSION_DENIED)) {
+                    Toast.makeText(this, "All Permissions not granted", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(this, "All Permissions granted", Toast.LENGTH_SHORT).show();
+                }
+                break;
+            case SMS_READ_RECEIVE_REQUEST_CODE:
+                if (grantResults[0] == PackageManager.PERMISSION_DENIED) {
+                    Toast.makeText(this, "SMS Read and Receive Permissions not granted", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(this, "SMS Read and Receive Permissions granted", Toast.LENGTH_SHORT).show();
+                }
+                break;
+        }
     }
 
 }
