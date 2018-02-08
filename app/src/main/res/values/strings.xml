@@ -1,4 +1,4 @@
 <resources>
 <string name="app_name">Transformer Health Monitoring Panel</string>
-
+    <string name="img_desc">Transformer Representation</string>
 </resources>

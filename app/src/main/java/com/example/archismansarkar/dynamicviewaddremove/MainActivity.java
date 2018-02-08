@@ -60,7 +60,7 @@ public class MainActivity extends Activity {
         buttonAdd = (Button)findViewById(R.id.add);
         container = (LinearLayout)findViewById(R.id.container);
 
-        sharedpreferences = getSharedPreferences("Transformer", Context.MODE_PRIVATE);
+        sharedpreferences = getApplicationContext().getSharedPreferences("Transformer", MODE_PRIVATE);
 
         pref = getApplicationContext().getSharedPreferences("Desired_Sender_Address", MODE_PRIVATE);
         desired_number = pref.getString("desired_address", null);
@@ -90,25 +90,14 @@ public class MainActivity extends Activity {
 
     @Override
     public void onBackPressed() {
-        if (exit) {
-            finish();
-            System.exit(0);
-        } else {
-            Toast.makeText(this, "Press Back again to Exit.",
-                    Toast.LENGTH_SHORT).show();
-            exit = true;
-            new Handler().postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    exit = false;
-                }
-            }, 3 * 1000);
-
-        }
-
+        Intent activityIntent=new Intent(getApplicationContext(),StartPageActivity.class);
+        activityIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        activityIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        activityIntent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+        getApplicationContext().startActivity(activityIntent);
     }
 
-    public void addViewStatic(final String data1, final String data2){
+    private void addViewStatic(final String data1, final String data2){
         LayoutInflater layoutInflater =
                 (LayoutInflater) getBaseContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         final View addView = layoutInflater.inflate(R.layout.field, null);
@@ -147,7 +136,7 @@ public class MainActivity extends Activity {
         container.addView(addView);
     }
 
-    public void addViewDynamic(){
+    private void addViewDynamic(){
         LayoutInflater layoutInflater =
                 (LayoutInflater) getBaseContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         final View addView = layoutInflater.inflate(R.layout.field, null);
@@ -193,7 +182,7 @@ public class MainActivity extends Activity {
         container.addView(addView);
     }
 
-    public boolean addFavoriteItem(Activity activity, String favoriteItem){
+    private boolean addFavoriteItem(Activity activity, String favoriteItem){
         //Get previous favorite items
         //SharedPreferences.Editor editor = sharedpreferences.edit();
         String favoriteList = getStringFromPreferences(activity,null,"favorites");
@@ -207,7 +196,7 @@ public class MainActivity extends Activity {
         return putStringInPreferences(activity,favoriteList,"favorites");
     }
 
-    public boolean removeFavoriteItem(Activity activity, String favoriteItem){
+    private boolean removeFavoriteItem(Activity activity, String favoriteItem){
         //Get previous favorite items
         String favoriteList = getStringFromPreferences(activity,null,"favorites");
         String newConcat = new String();
@@ -227,30 +216,23 @@ public class MainActivity extends Activity {
         return putStringInPreferences(activity,newConcat,"favorites");
     }
 
-    public String[] getFavoriteList(Activity activity){
+    private String[] getFavoriteList(Activity activity){
         String favoriteList = getStringFromPreferences(activity,null,"favorites");
         return convertStringToArray(favoriteList);
     }
     private boolean putStringInPreferences(Activity activity,String nick,String key){
-        SharedPreferences sharedPreferences = activity.getPreferences(Activity.MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
+        //SharedPreferences sharedPreferences = activity.getPreferences(Activity.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedpreferences.edit();
         editor.putString(key, nick);
         //editor.apply();
         editor.commit();
         return true;
     }
-    private boolean removeStringInPreferences(Activity activity,String key){
-        SharedPreferences sharedPreferences = activity.getPreferences(Activity.MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.remove(key);
-        //editor.apply();
-        editor.commit();
-        return true;
-    }
+
     private String getStringFromPreferences(Activity activity,String defaultValue,String key){
-        SharedPreferences sharedPreferences = activity.getPreferences(Activity.MODE_PRIVATE);
-        if(sharedPreferences.contains(key)) {
-            String temp = sharedPreferences.getString(key, defaultValue);
+        //SharedPreferences sharedPreferences = activity.getPreferences(Activity.MODE_PRIVATE);
+        if(sharedpreferences.contains(key)) {
+            String temp = sharedpreferences.getString(key, defaultValue);
             return temp;
         }
         else return null;

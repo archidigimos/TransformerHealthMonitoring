@@ -81,27 +81,6 @@ public class DataDisplayActivity extends ListActivity{
 
     }
 
-    /*
-    @Override
-    public void onBackPressed() {
-        if (exit) {
-            finish();
-            System.exit(0);
-        } else {
-            Toast.makeText(this, "Press Back again to Exit.",
-                    Toast.LENGTH_SHORT).show();
-            exit = true;
-            new Handler().postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    exit = false;
-                }
-            }, 3 * 1000);
-
-        }
-
-    }
-    */
     @Override
     public void onBackPressed() {
         Intent activityIntent=new Intent(getApplicationContext(),MainActivity.class);

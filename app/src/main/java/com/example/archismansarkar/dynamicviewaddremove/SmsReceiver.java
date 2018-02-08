@@ -38,7 +38,7 @@ public class SmsReceiver extends BroadcastReceiver
             //Toast.makeText(context, "Message: "+ sms_str, Toast.LENGTH_LONG).show();
 
             // Start Application's  MainActivty activity
-            Intent smsIntent=new Intent(context,MainActivity.class);
+            Intent smsIntent=new Intent(context,DataDisplayActivity.class);
             smsIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             smsIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
             smsIntent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
