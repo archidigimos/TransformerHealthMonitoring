@@ -4,34 +4,31 @@ package com.example.archismansarkar.dynamicviewaddremove;
  * Created by Archisman Sarkar on 2/8/2018.
  */
 
+import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import java.util.ArrayList;
-import java.util.List;
 
-import android.app.ListActivity;
 import android.database.Cursor;
 import android.net.Uri;
-import android.os.Handler;
+import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.ListView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 
-public class DataDisplayActivity extends ListActivity{
+public class DataDisplayActivity extends Activity {
 
     String senderAddress = "";
     String desiredAddress;
     String smsBody = "";
     String smsBodyParts[];
-    List<SMSData> smsList = new ArrayList<SMSData>();
+    LinearLayout data_holder;
 
     String date = "";
     int track = 0;
-    String identity = "";
-    String identity1= "sms";
-    String identity2= "login";
     SharedPreferences pref;
 
     private Boolean exit = false;
@@ -43,6 +40,9 @@ public class DataDisplayActivity extends ListActivity{
         Intent sms_intent=getIntent();
         Bundle b=sms_intent.getExtras();
 
+        setContentView(R.layout.data_log);
+        data_holder = (LinearLayout)findViewById(R.id.data_logging);
+
         pref = getApplicationContext().getSharedPreferences("Desired_Sender_Address", MODE_PRIVATE);
         if(b!=null) {
             Toast.makeText(this, "Address: " + b.getString("sms_address") + "\n Message: " + b.getString("sms_body"), Toast.LENGTH_LONG).show();
@@ -53,17 +53,14 @@ public class DataDisplayActivity extends ListActivity{
             if (desiredAddress.equals(senderAddress)) {
 
                 smsBody = b.getString("sms_body");
-                /*
+
                 smsBody = smsBody.replace("\n", "=");
                 smsBodyParts = smsBody.split("=");
                 date = b.getString("sms_date");
-                if (smsBodyParts.length >= 12)
+                if (smsBodyParts.length >= 12) {
                     smsBody = "VR: " + smsBodyParts[1] + "\n" + " VY: " + smsBodyParts[3] + "\n" + " VB: " + smsBodyParts[5] + "\n" + "CR: " + smsBodyParts[7] + "\n" + " CY: " + smsBodyParts[9] + "\n" + " CB: " + smsBodyParts[11] + " Time: " + date;
-                */
-                sms.setBody(smsBody);
-                sms.setNumber(senderAddress);
-                smsList.add(sms);
-                setListAdapter(new ListAdapter(DataDisplayActivity.this, smsList));
+                    addViewStatic(smsBodyParts[1], smsBodyParts[3], smsBodyParts[5], smsBodyParts[7], smsBodyParts[9], smsBodyParts[11], date);
+                }
             }
         }
         if (track == 0) {
@@ -71,14 +68,6 @@ public class DataDisplayActivity extends ListActivity{
             uiUpdate();
             track = 1;
         }
-    }
-
-    @Override
-    protected void onListItemClick(ListView l, View v, int position, long id) {
-        SMSData sms = (SMSData)getListAdapter().getItem(position);
-
-        Toast.makeText(getApplicationContext(), sms.getBody(), Toast.LENGTH_LONG).show();
-
     }
 
     @Override
@@ -103,24 +92,49 @@ public class DataDisplayActivity extends ListActivity{
                 if(desiredAddress.equals(senderAddress)) {
 
                     smsBody = c.getString(c.getColumnIndexOrThrow("body")).toString();
-                    /*
+
                     smsBody = smsBody.replace("\n","=");
                     smsBodyParts = smsBody.split("=");
 
                     date =  c.getString(c.getColumnIndexOrThrow("date")).toString();
-                    if(smsBodyParts.length>=12)
-                        smsBody = "VR: "+smsBodyParts[1] + "\n" +" VY: "+smsBodyParts[3] + "\n" +" VB: "+smsBodyParts[5]+"\n"+"CR: "+smsBodyParts[7] + "\n" +" CY: "+smsBodyParts[9] + "\n" +" CB: "+smsBodyParts[11]+" Time: "+date;
-                    */
-                    sms.setBody(smsBody);
-                    sms.setNumber(senderAddress);
-                    smsList.add(sms);
+                    if(smsBodyParts.length>=12) {
+                        smsBody = "VR: " + smsBodyParts[1] + "\n" + " VY: " + smsBodyParts[3] + "\n" + " VB: " + smsBodyParts[5] + "\n" + "CR: " + smsBodyParts[7] + "\n" + " CY: " + smsBodyParts[9] + "\n" + " CB: " + smsBodyParts[11] + " Time: " + date;
+                        addViewStatic(smsBodyParts[1], smsBodyParts[3], smsBodyParts[5], smsBodyParts[7], smsBodyParts[9], smsBodyParts[11], date);
+                    }
                 }
                 c.moveToNext();
             }
         }
         c.close();
+    }
 
-        setListAdapter(new ListAdapter(this, smsList));
+    private void addViewStatic(final String vr, final String vy, final String vb, final String cr, final String cy, final String cb, final String time){
+        LayoutInflater layoutInflater =
+                (LayoutInflater) getBaseContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        final View addView = layoutInflater.inflate(R.layout.data_log_widget, null);
+
+        TextView vr_log = (TextView)addView.findViewById(R.id.VoltageR_log);
+        vr_log.setText(vr);
+
+        TextView vy_log = (TextView)addView.findViewById(R.id.VoltageY_log);
+        vy_log.setText(vy);
+
+        TextView vb_log = (TextView)addView.findViewById(R.id.VoltageB_log);
+        vb_log.setText(vb);
+
+        TextView cr_log = (TextView)addView.findViewById(R.id.CurrentR_log);
+        cr_log.setText(cr);
+
+        TextView cy_log = (TextView)addView.findViewById(R.id.CurrentY_log);
+        cy_log.setText(cy);
+
+        TextView cb_log = (TextView)addView.findViewById(R.id.CurrentB_log);
+        cb_log.setText(cb);
+
+        TextView time_log = (TextView)addView.findViewById(R.id.Timestamp_log);
+        time_log.setText(time);
+
+        data_holder.addView(addView);
     }
 
 }

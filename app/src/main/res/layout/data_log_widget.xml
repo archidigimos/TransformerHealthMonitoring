@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+
+        <TableRow
+            android:id="@+id/tableRow1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/VoltageR_log"
+                android:layout_width="45dp"
+                android:layout_height="match_parent"
+                android:background="@drawable/cell_data"
+                android:padding="5dp"
+                android:text="Vr"
+                android:textAlignment="center"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textColor="@android:color/background_dark"
+                android:textSize="10sp"></TextView>
+
+            <TextView
+                android:id="@+id/VoltageY_log"
+                android:layout_width="45dp"
+                android:layout_height="match_parent"
+                android:background="@drawable/cell_data"
+                android:padding="5dp"
+                android:text="Vy"
+                android:textAlignment="center"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textColor="@android:color/background_dark"
+                android:textSize="10sp"></TextView>
+
+            <TextView
+                android:id="@+id/VoltageB_log"
+                android:layout_width="45dp"
+                android:layout_height="match_parent"
+                android:background="@drawable/cell_data"
+                android:padding="5dp"
+                android:text="Vb"
+                android:textAlignment="center"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textColor="@android:color/background_dark"
+                android:textSize="10sp"></TextView>
+
+            <TextView
+                android:id="@+id/CurrentR_log"
+                android:layout_width="45dp"
+                android:layout_height="match_parent"
+                android:background="@drawable/cell_data"
+                android:padding="5dp"
+                android:text="Cr"
+                android:textAlignment="center"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textColor="@android:color/background_dark"
+                android:textSize="10sp"></TextView>
+
+            <TextView
+                android:id="@+id/CurrentY_log"
+                android:layout_width="45dp"
+                android:layout_height="match_parent"
+                android:background="@drawable/cell_data"
+                android:padding="5dp"
+                android:text="Cy"
+                android:textAlignment="center"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textColor="@android:color/background_dark"
+                android:textSize="10sp"></TextView>
+
+            <TextView
+                android:id="@+id/CurrentB_log"
+                android:layout_width="45dp"
+                android:layout_height="match_parent"
+                android:background="@drawable/cell_data"
+                android:padding="5dp"
+                android:text="Cb"
+                android:textAlignment="center"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textColor="@android:color/background_dark"
+                android:textSize="10sp"></TextView>
+
+            <TextView
+                android:id="@+id/Timestamp_log"
+                android:layout_width="105dp"
+                android:layout_height="match_parent"
+                android:background="@drawable/cell_data"
+                android:padding="5dp"
+                android:text="Time"
+                android:textAlignment="center"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textColor="@android:color/background_dark"
+                android:textSize="10sp"></TextView>
+
+        </TableRow>
+
+    </RelativeLayout>
+
+</android.support.constraint.ConstraintLayout>
