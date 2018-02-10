@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -128,7 +127,6 @@ public class MainActivity extends Activity {
 
             @Override
             public void onClick(View v) {
-                //removeStringInPreferences(MainActivity.this,data1);
                 removeFavoriteItem(MainActivity.this, (data1+":"+data2));
                 ((LinearLayout)addView.getParent()).removeView(addView);
             }});
@@ -168,13 +166,11 @@ public class MainActivity extends Activity {
         });
 
         addFavoriteItem(MainActivity.this, (data1+":"+data2));
-        //putStringInPreferences(this,data2,data1);
         Button buttonRemove = (Button)addView.findViewById(R.id.remove);
         buttonRemove.setOnClickListener(new OnClickListener(){
 
             @Override
             public void onClick(View v) {
-                //removeStringInPreferences(MainActivity.this,data1);
                 removeFavoriteItem(MainActivity.this, (data1+":"+data2));
                 ((LinearLayout)addView.getParent()).removeView(addView);
             }});
@@ -184,7 +180,6 @@ public class MainActivity extends Activity {
 
     private boolean addFavoriteItem(Activity activity, String favoriteItem){
         //Get previous favorite items
-        //SharedPreferences.Editor editor = sharedpreferences.edit();
         String favoriteList = getStringFromPreferences(activity,null,"favorites");
         // Append new Favorite item
         if(favoriteList!=null){
@@ -221,16 +216,13 @@ public class MainActivity extends Activity {
         return convertStringToArray(favoriteList);
     }
     private boolean putStringInPreferences(Activity activity,String nick,String key){
-        //SharedPreferences sharedPreferences = activity.getPreferences(Activity.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedpreferences.edit();
         editor.putString(key, nick);
-        //editor.apply();
         editor.commit();
         return true;
     }
 
     private String getStringFromPreferences(Activity activity,String defaultValue,String key){
-        //SharedPreferences sharedPreferences = activity.getPreferences(Activity.MODE_PRIVATE);
         if(sharedpreferences.contains(key)) {
             String temp = sharedpreferences.getString(key, defaultValue);
             return temp;

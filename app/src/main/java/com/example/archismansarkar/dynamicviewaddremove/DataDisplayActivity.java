@@ -31,19 +31,19 @@ public class DataDisplayActivity extends Activity {
     int track = 0;
     SharedPreferences pref;
 
-    private Boolean exit = false;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        Intent sms_intent=getIntent();
-        Bundle b=sms_intent.getExtras();
+        //Intent sms_intent=getIntent();
+        //Bundle b=sms_intent.getExtras();
 
         setContentView(R.layout.data_log);
         data_holder = (LinearLayout)findViewById(R.id.data_logging);
 
         pref = getApplicationContext().getSharedPreferences("Desired_Sender_Address", MODE_PRIVATE);
+        /*
         if(b!=null) {
             Toast.makeText(this, "Address: " + b.getString("sms_address") + "\n Message: " + b.getString("sms_body"), Toast.LENGTH_LONG).show();
             SMSData sms = new SMSData();
@@ -63,6 +63,7 @@ public class DataDisplayActivity extends Activity {
                 }
             }
         }
+        */
         if (track == 0) {
             desiredAddress = pref.getString("desired_address", "+919800644706");
             uiUpdate();
@@ -86,8 +87,7 @@ public class DataDisplayActivity extends Activity {
 
         if(c.moveToFirst()) {
             for(int i=0; i < c.getCount(); i++) {
-                SMSData sms = new SMSData();
-
+                //SMSData sms = new SMSData();
                 senderAddress = c.getString(c.getColumnIndexOrThrow("address")).toString();
                 if(desiredAddress.equals(senderAddress)) {
 

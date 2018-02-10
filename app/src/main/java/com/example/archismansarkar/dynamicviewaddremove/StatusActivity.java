@@ -4,6 +4,9 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.database.Cursor;
+import android.graphics.Color;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,17 +23,27 @@ public class StatusActivity extends Activity {
     String[] tname;
     LinearLayout statusholder;
     int size = 0;
+    Intent sms_intent=getIntent();
+    Bundle b = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.status_page);
 
+
+        try {
+            b = sms_intent.getExtras();
+        }
+        catch(Exception E){
+
+        }
+
         pref = getApplicationContext().getSharedPreferences("Transformer", MODE_PRIVATE);
 
         statusholder = (LinearLayout)findViewById(R.id.status_holder);
 
-        tname = getFavoriteList(this);
+        tname = getFavoriteList();
 
         if(tname!=null) {
             size = tname.length;
@@ -66,17 +79,67 @@ public class StatusActivity extends Activity {
         });
         TextView tid = (TextView)addView.findViewById(R.id.identifier_);
         tid.setText("Name: "+data1+" ID: "+data2);
+        intent_reception(data2,tid);
 
         statusholder.addView(addView);
     }
 
-    private String[] getFavoriteList(Activity activity){
-        String favoriteList = getStringFromPreferences(activity,null,"favorites");
+    private void intent_reception(String transformer_id, TextView t){
+        health_status_update_ui(transformer_id,t);
+    }
+
+    public void health_status_update_ui(String desiredAddress, TextView t){
+        Uri uri = Uri.parse("content://sms/inbox");
+        Cursor c= getContentResolver().query(uri, null, null ,null,null);
+        String senderAddress, smsBody, date;
+        String[] smsBodyParts;
+        if(c.moveToFirst()) {
+            for(int i=0; i < c.getCount(); i++) {
+                senderAddress = c.getString(c.getColumnIndexOrThrow("address")).toString();
+                if(desiredAddress.equals(senderAddress)) {
+
+                    smsBody = c.getString(c.getColumnIndexOrThrow("body")).toString();
+
+                    smsBody = smsBody.replace("\n","=");
+                    smsBodyParts = smsBody.split("=");
+
+                    if(smsBodyParts.length>=12) {
+                        dataProcessAndSet(smsBodyParts[1], smsBodyParts[3], smsBodyParts[5], smsBodyParts[7], smsBodyParts[9], smsBodyParts[11], t);
+                        break;
+                    }
+                }
+                else c.moveToNext();
+            }
+        }
+        c.close();
+    }
+
+    public void dataProcessAndSet(String vr, String vy, String vb, String cr, String cy, String cb, TextView t){
+        double vR, vY, vB, cR, cY, cB;
+        vR = Double.parseDouble(vr);
+        vY = Double.parseDouble(vy);
+        vB = Double.parseDouble(vb);
+        cR = Double.parseDouble(cr);
+        cY = Double.parseDouble(cy);
+        cB = Double.parseDouble(cb);
+
+        double total = vR+ vY+ vB+ cR+ cY+ cB;
+        double threshold = 800.0;
+
+        if(total>threshold){
+            t.setBackgroundColor(Color.RED);
+        }
+        else{
+            t.setBackgroundColor(Color.GREEN);
+        }
+    }
+
+    private String[] getFavoriteList(){
+        String favoriteList = getStringFromPreferences(null,"favorites");
         return convertStringToArray(favoriteList);
     }
 
-    private String getStringFromPreferences(Activity activity,String defaultValue,String key){
-        //SharedPreferences sharedPreferences = activity.getPreferences(Activity.MODE_PRIVATE);
+    private String getStringFromPreferences(String defaultValue,String key){
         if(pref.contains(key)) {
             String temp = pref.getString(key, defaultValue);
             return temp;
