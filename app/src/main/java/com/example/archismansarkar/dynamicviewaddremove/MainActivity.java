@@ -100,7 +100,7 @@ public class MainActivity extends Activity {
         LayoutInflater layoutInflater =
                 (LayoutInflater) getBaseContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         final View addView = layoutInflater.inflate(R.layout.field, null);
-        Button transformer = (Button)addView.findViewById(R.id.tf);
+        Button transformer = (Button)addView.findViewById(R.id.electrical_parameter);
         transformer.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
