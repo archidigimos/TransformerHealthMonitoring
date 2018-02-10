@@ -9,64 +9,78 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <Button
-            android:id="@+id/remove"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_alignParentEnd="true"
-            android:background="@drawable/remove" />
-
-        <Button
-            android:id="@+id/tf"
-            android:layout_width="60dp"
-            android:layout_height="45dp"
-            android:layout_alignParentStart="true"
-            android:background="@drawable/transformer" />
-
-        <TextView
-            android:id="@+id/identifier"
-            android:layout_width="wrap_content"
+        <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:tools="http://schemas.android.com/tools"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_marginStart="23dp"
-            android:layout_toEndOf="@+id/tf"
-            android:text="TextView" />
+            android:background="@android:color/background_light"
+            android:backgroundTint="@android:color/holo_blue_bright"
+            android:layout_marginTop="15dp">
 
-    </RelativeLayout>
-    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+            <Button
+                android:id="@+id/remove"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_alignParentEnd="true"
+                android:layout_marginStart="5dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginTop="5dp"
+                android:background="@drawable/remove" />
 
-        <Button
-            android:id="@+id/electrical_parameter"
-            android:layout_width="100dp"
-            android:layout_height="40dp"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentTop="true"
-            android:layout_marginEnd="105dp"
-            android:backgroundTint="@android:color/holo_blue_dark"
-            android:text="Electrical Parameters"
-            android:textColor="@android:color/background_light"
-            android:textSize="8sp" />
+            <Button
+                android:id="@+id/tf"
+                android:layout_width="60dp"
+                android:layout_height="45dp"
+                android:layout_alignParentStart="true"
+                android:layout_marginTop="5dp"
+                android:background="@drawable/transformer" />
 
-        <Button
-            android:id="@+id/thermal_humidity_parameter"
-            android:layout_width="100dp"
-            android:layout_height="40dp"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentTop="true"
-            android:layout_marginEnd="5dp"
-            android:backgroundTint="@android:color/holo_blue_dark"
-            android:text="Other Parameters"
-            android:textColor="@android:color/background_light"
-            android:textSize="8sp" />
+            <TextView
+                android:id="@+id/identifier"
+                android:layout_width="245dp"
+                android:layout_height="40dp"
+                android:layout_centerVertical="true"
+                android:layout_marginTop="5dp"
+                android:layout_marginEnd="25dp"
+                android:layout_marginStart="70dp"
+                android:layout_toStartOf="@+id/remove"
+                android:text="TextView"
+                android:textColor="@android:color/background_light" />
 
-    </RelativeLayout>
+        </RelativeLayout>
+
+        <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:tools="http://schemas.android.com/tools"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@android:color/background_light"
+            android:backgroundTint="@android:color/holo_blue_bright">
+
+            <Button
+                android:id="@+id/electrical_parameter"
+                android:layout_width="100dp"
+                android:layout_height="40dp"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentTop="true"
+                android:layout_marginEnd="105dp"
+                android:backgroundTint="@android:color/holo_blue_dark"
+                android:text="Electrical Parameters"
+                android:textColor="@android:color/background_light"
+                android:textSize="8sp" />
+
+            <Button
+                android:id="@+id/thermal_humidity_parameter"
+                android:layout_width="100dp"
+                android:layout_height="40dp"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentTop="true"
+                android:layout_marginEnd="5dp"
+                android:backgroundTint="@android:color/holo_blue_dark"
+                android:text="Other Parameters"
+                android:textColor="@android:color/background_light"
+                android:textSize="8sp" />
+
+        </RelativeLayout>
+
     </LinearLayout>
 </android.support.constraint.ConstraintLayout>

@@ -16,9 +16,11 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@android:color/holo_blue_dark"
             android:text="Transformer Health Status"
             android:textAlignment="center"
-            android:textSize="18sp"
+            android:textColor="@android:color/background_light"
+            android:textSize="12sp"
             android:textStyle="bold" />
 
         <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"

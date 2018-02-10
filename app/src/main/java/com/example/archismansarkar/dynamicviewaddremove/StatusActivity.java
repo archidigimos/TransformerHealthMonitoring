@@ -108,7 +108,7 @@ public class StatusActivity extends Activity {
                         break;
                     }
                 }
-                else c.moveToNext();
+                c.moveToNext();
             }
         }
         c.close();
@@ -126,6 +126,7 @@ public class StatusActivity extends Activity {
         double total = vR+ vY+ vB+ cR+ cY+ cB;
         double threshold = 800.0;
 
+        t.setBackgroundColor(Color.RED);
         if(total>threshold){
             t.setBackgroundColor(Color.RED);
         }

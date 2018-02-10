@@ -15,10 +15,14 @@
         tools:context=".MainActivity" >
 
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@android:color/holo_blue_dark"
+            android:fontFamily="monospace"
             android:text="Enter Transformer Name and ID Number below"
-            android:textSize="18sp"
+            android:textAlignment="center"
+            android:textColor="@android:color/background_light"
+            android:textSize="12sp"
             android:textStyle="bold" />
         <RelativeLayout
             android:layout_width="match_parent"

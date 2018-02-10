@@ -18,12 +18,10 @@
 
         <TextView
             android:id="@+id/identifier_"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_height="28dp"
             android:layout_alignBaseline="@+id/tf_"
             android:layout_alignBottom="@+id/tf_"
-            android:layout_alignParentEnd="true"
-            android:layout_marginEnd="46dp"
             android:layout_toEndOf="@+id/tf_"
             android:background="@android:color/darker_gray"
             android:fontFamily="monospace"
