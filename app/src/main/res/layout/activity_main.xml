@@ -24,35 +24,53 @@
             android:textColor="@android:color/background_light"
             android:textSize="12sp"
             android:textStyle="bold" />
+
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="50dp"
+            android:background="@android:color/holo_blue_bright"
+            android:backgroundTint="@color/colorPrimaryDark">
 
             <Button
                 android:id="@+id/add"
-                android:layout_width="45dp"
-                android:layout_height="45dp"
-                android:layout_alignParentRight="true"
-                android:background="@drawable/add"
-                />
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_alignParentEnd="true"
+                android:layout_marginEnd="10dp"
+                android:layout_marginStart="5dp"
+                android:layout_marginTop="5dp"
+                android:background="@drawable/add" />
 
             <EditText
                 android:id="@+id/tfname"
+                style="@style/Widget.AppCompat.EditText"
                 android:layout_width="110dp"
                 android:layout_height="wrap_content"
+                android:layout_alignBaseline="@+id/tfnumber"
+                android:layout_alignBottom="@+id/tfnumber"
                 android:layout_alignParentStart="true"
-                android:layout_alignParentTop="true"
-                android:layout_marginStart="36dp"
-                android:text="Name"/>
+                android:layout_marginStart="23dp"
+                android:background="@android:color/background_light"
+                android:backgroundTint="@android:color/background_light"
+                android:fontFamily="monospace"
+                android:text="Name"
+                android:textAlignment="center"
+                android:textColor="@android:color/background_dark" />
 
             <EditText
                 android:id="@+id/tfnumber"
-                android:layout_width="110dp"
+                style="@style/Widget.AppCompat.EditText"
+                android:layout_width="150dp"
                 android:layout_height="wrap_content"
-                android:layout_alignParentTop="true"
-                android:layout_marginEnd="45dp"
+                android:layout_centerVertical="true"
+                android:layout_marginEnd="16dp"
                 android:layout_toStartOf="@+id/add"
-                android:text="ID Number"/>
+                android:background="@android:color/background_light"
+                android:backgroundTint="@android:color/background_light"
+                android:fontFamily="monospace"
+                android:text="ID Number"
+                android:textAlignment="center"
+                android:textColor="@android:color/background_dark" />
 
         </RelativeLayout>
 
