@@ -1,6 +1,7 @@
 package com.example.archismansarkar.dynamicviewaddremove;
 
 import android.app.Activity;
+import android.app.ActivityOptions;
 import android.content.Intent;
 import android.media.Image;
 import android.os.Bundle;
@@ -31,8 +32,9 @@ public class StartPageActivity extends Activity {
                 Intent activityIntent=new Intent(getApplicationContext(),MainActivity.class);
                 activityIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 activityIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                activityIntent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-                getApplicationContext().startActivity(activityIntent);
+                ActivityOptions options =
+                        ActivityOptions.makeCustomAnimation(getApplicationContext(), R.anim.fadein, R.anim.fadeout);
+                getApplicationContext().startActivity(activityIntent, options.toBundle());
             }});
 
         tf_health_status.setOnClickListener(new View.OnClickListener(){
@@ -42,8 +44,9 @@ public class StartPageActivity extends Activity {
                 Intent activityIntent=new Intent(getApplicationContext(),StatusActivity.class);
                 activityIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 activityIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                activityIntent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-                getApplicationContext().startActivity(activityIntent);
+                ActivityOptions options =
+                        ActivityOptions.makeCustomAnimation(getApplicationContext(), R.anim.fadein, R.anim.fadeout);
+                getApplicationContext().startActivity(activityIntent, options.toBundle());
             }});
     }
 

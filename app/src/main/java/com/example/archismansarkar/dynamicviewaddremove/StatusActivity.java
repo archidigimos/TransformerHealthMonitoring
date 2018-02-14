@@ -1,6 +1,7 @@
 package com.example.archismansarkar.dynamicviewaddremove;
 
 import android.app.Activity;
+import android.app.ActivityOptions;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -63,8 +64,9 @@ public class StatusActivity extends Activity {
         Intent activityIntent=new Intent(getApplicationContext(),StartPageActivity.class);
         activityIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         activityIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        activityIntent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-        getApplicationContext().startActivity(activityIntent);
+        ActivityOptions options =
+                ActivityOptions.makeCustomAnimation(getApplicationContext(), R.anim.fadein, R.anim.fadeout);
+        getApplicationContext().startActivity(activityIntent, options.toBundle());
     }
 
     private void addViewStatic(final String data1, final String data2){

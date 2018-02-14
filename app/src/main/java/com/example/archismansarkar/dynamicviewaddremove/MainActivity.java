@@ -1,6 +1,7 @@
 package com.example.archismansarkar.dynamicviewaddremove;
 
 import android.Manifest;
+import android.app.ActivityOptions;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
@@ -92,16 +93,17 @@ public class MainActivity extends Activity {
         Intent activityIntent=new Intent(getApplicationContext(),StartPageActivity.class);
         activityIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         activityIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        activityIntent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-        getApplicationContext().startActivity(activityIntent);
+        ActivityOptions options =
+                ActivityOptions.makeCustomAnimation(getApplicationContext(), R.anim.fadein, R.anim.fadeout);
+        getApplicationContext().startActivity(activityIntent, options.toBundle());
     }
 
     private void addViewStatic(final String data1, final String data2){
         LayoutInflater layoutInflater =
                 (LayoutInflater) getBaseContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         final View addView = layoutInflater.inflate(R.layout.field, null);
-        Button transformer = (Button)addView.findViewById(R.id.electrical_parameter);
-        transformer.setOnClickListener(new OnClickListener() {
+        Button electrical_Params = (Button)addView.findViewById(R.id.electrical_parameter);
+        electrical_Params.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
 
@@ -113,8 +115,30 @@ public class MainActivity extends Activity {
                     Intent activityIntent=new Intent(getApplicationContext(),DataDisplayActivity.class);
                     activityIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     activityIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                    activityIntent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-                    getApplicationContext().startActivity(activityIntent);
+                    ActivityOptions options =
+                            ActivityOptions.makeCustomAnimation(getApplicationContext(), R.anim.fadein, R.anim.fadeout);
+                    getApplicationContext().startActivity(activityIntent, options.toBundle());
+                } else {
+                    mRuntimePermission.requestPermission(MainActivity.this, ALL_PERMISSIONS, ALL_REQUEST_CODE);
+                }
+            }
+        });
+        Button other_Params = (Button)addView.findViewById(R.id.thermal_humidity_parameter);
+        other_Params.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if (mRuntimePermission.hasPermission(ALL_PERMISSIONS)) {
+                    SharedPreferences.Editor idnumber = pref.edit();
+                    idnumber.putString("desired_address", data2);
+                    idnumber.commit();
+
+                    Intent activityIntent=new Intent(getApplicationContext(),DataDisplayActivity_other.class);
+                    activityIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    activityIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                    ActivityOptions options =
+                            ActivityOptions.makeCustomAnimation(getApplicationContext(), R.anim.fadein, R.anim.fadeout);
+                    getApplicationContext().startActivity(activityIntent, options.toBundle());
                 } else {
                     mRuntimePermission.requestPermission(MainActivity.this, ALL_PERMISSIONS, ALL_REQUEST_CODE);
                 }
@@ -157,8 +181,9 @@ public class MainActivity extends Activity {
                     Intent activityIntent=new Intent(getApplicationContext(),DataDisplayActivity.class);
                     activityIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     activityIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                    activityIntent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-                    getApplicationContext().startActivity(activityIntent);
+                    ActivityOptions options =
+                            ActivityOptions.makeCustomAnimation(getApplicationContext(), R.anim.fadein, R.anim.fadeout);
+                    getApplicationContext().startActivity(activityIntent, options.toBundle());
                 } else {
                     mRuntimePermission.requestPermission(MainActivity.this, ALL_PERMISSIONS, ALL_REQUEST_CODE);
                 }

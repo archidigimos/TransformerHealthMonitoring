@@ -31,6 +31,12 @@
 
             </intent-filter>
         </activity>
+        <activity android:name=".DataDisplayActivity_other">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+            </intent-filter>
+        </activity>
         <activity android:name=".StatusActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

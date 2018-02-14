@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+
+        <TableRow
+            android:id="@+id/tableRow2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/humidity_other"
+                android:layout_width="80dp"
+                android:layout_height="match_parent"
+                android:background="@drawable/cell_data"
+                android:padding="5dp"
+                android:text="humidity"
+                android:textAlignment="center"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textColor="@android:color/background_dark"
+                android:textSize="10sp"></TextView>
+
+            <TextView
+                android:id="@+id/temperature_other"
+                android:layout_width="110dp"
+                android:layout_height="match_parent"
+                android:background="@drawable/cell_data"
+                android:padding="5dp"
+                android:text="temperature"
+                android:textAlignment="center"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textColor="@android:color/background_dark"
+                android:textSize="10sp"></TextView>
+
+            <TextView
+                android:id="@+id/oil_level_other"
+                android:layout_width="75dp"
+                android:layout_height="match_parent"
+                android:background="@drawable/cell_data"
+                android:padding="5dp"
+                android:text="oillevel"
+                android:textAlignment="center"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textColor="@android:color/background_dark"
+                android:textSize="10sp"></TextView>
+
+            <TextView
+                android:id="@+id/timestamp_other"
+                android:layout_width="100dp"
+                android:layout_height="match_parent"
+                android:background="@drawable/cell_data"
+                android:padding="5dp"
+                android:text="Timestamp"
+                android:textAlignment="center"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textColor="@android:color/background_dark"
+                android:textSize="10sp"></TextView>
+
+        </TableRow>
+
+    </RelativeLayout>
+
+</android.support.constraint.ConstraintLayout>
